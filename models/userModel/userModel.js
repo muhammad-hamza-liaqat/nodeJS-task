@@ -24,10 +24,13 @@ const userSchema = new mongoose.Schema({
       },
       message: "Phone number must be exactly 11 numeric characters",
     },
+    password: {
+      type: String,
+      required: false,
+    },
   },
 });
 
-// Compile the Mongoose model
 const User = mongoose.model("User", userSchema);
 
 // joi validations
@@ -61,9 +64,9 @@ const userJoiSchema = Joi.object({
 });
 
 // Validate using Joi before saving to the database
-async function validateUser(user) {
+function validateUser(user) {
   try {
-    return await userJoiSchema.validateAsync(user);
+    return userJoiSchema.validate(user);
   } catch (error) {
     throw new Error(error.details[0].message);
   }
