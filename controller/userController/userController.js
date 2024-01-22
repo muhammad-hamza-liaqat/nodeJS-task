@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 const userSignUp = async (req, res) => {
     const userData = req.body;
-    console.log(userData)
+    // console.log(userData)
     const validationResult = validateUser(userData);
   
     if (validationResult.error) {
@@ -27,7 +27,8 @@ const userSignUp = async (req, res) => {
       // New user creation
       const randomPassword = uuidv4();
       const hashedRandomPassword = await bcrypt.hash(randomPassword, 10);
-  
+      console.log("randomPassword", randomPassword);
+      console.log("hashedRandomPassword", hashedRandomPassword);
       // Creating a new user with spread operator and hashed password
       const newUser = await userModel.create({
         ...req.body,
@@ -60,9 +61,14 @@ const userSignIn = async (req, res) => {
   try {
     const userToFind = await User.findOne({email:email})
     if (!userToFind){
-        return res.status(400).json({message: "user not found"})
+        return res.status(400).json({message: "invalid email or password"})
     }
-
+    const validatePassword = await bcrypt.compare(userToFind.password, password);
+    if (!validatePassword){
+      return res.status(400).json({message: " invalid email or password"})
+    }
+    console.log("user login",userToFind)
+    return res.status(200).json({message: "user login", user: userToFind})
     
   } catch (error) {
     console.log("internal server error- userSignIn",error);
