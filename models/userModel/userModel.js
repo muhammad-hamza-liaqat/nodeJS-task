@@ -1,18 +1,18 @@
+const Joi = require("joi");
 const mongoose = require("mongoose");
 
+// user Mongoose schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    // Minimum length of 4 characters
     minlength: 4,
-    // Only alphabetic characters and spaces are allowed
+    // only alphabetic allowed
     match: /^[a-zA-Z ]*$/,
   },
   email: {
     type: String,
     required: true,
-    // Making email field unique
     unique: true,
   },
   phoneNumber: {
@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function (value) {
-        // Validation for exactly 11 numeric characters
         return /^\d{11}$/.test(value);
       },
       message: "Phone number must be exactly 11 numeric characters",
@@ -28,6 +27,46 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Compile the Mongoose model
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+// joi validations
+const userJoiSchema = Joi.object({
+  name: Joi.string()
+    .min(4)
+    .pattern(/^[a-zA-Z ]*$/)
+    .required(),
+  email: Joi.string()
+    .email()
+    .required()
+    .custom((value, helpers) => {
+      // only gmail and hotmail are allowes
+      const allowedDomains = ["gmail.com", "hotmail.com"];
+      const domain = value.split("@")[1];
+      if (!allowedDomains.includes(domain)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }),
+  phoneNumber: Joi.string()
+    .pattern(/^\d{11}$/)
+    .required()
+    .custom((value, helpers) => {
+      // only numeric allowed
+      if (!/^\d+$/.test(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }),
+});
+
+// Validate using Joi before saving to the database
+async function validateUser(user) {
+  try {
+    return await userJoiSchema.validateAsync(user);
+  } catch (error) {
+    throw new Error(error.details[0].message);
+  }
+}
+
+module.exports = { User, validateUser };
