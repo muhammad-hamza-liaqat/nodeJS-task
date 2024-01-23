@@ -6,8 +6,9 @@ const { newEmailQueue } = require("../../utils/nodeMailer/nodeMailer");
 const userSignUp = async (req, res) => {
   const userData = req.body;
   // console.log(userData)
+  // joi validation
   const validationResult = validateUser(userData);
-
+  // error in joi validation
   if (validationResult.error) {
     return res.status(400).json({
       message: "Validation error",
@@ -35,6 +36,7 @@ const userSignUp = async (req, res) => {
     });
 
     console.log("User created", newUser);
+    // HTML email content for sending up the email
     const welcomeUserContent = `
       <html>
         <head>
@@ -80,11 +82,11 @@ const userSignUp = async (req, res) => {
 const userSignIn = async (req, res) => {
   const { email, password } = req.body;
   console.log("Received request with email:", email);
-
+  // if email does not exists
   if (!email) {
     return res.status(400).json({ message: "Email required" });
   }
-
+  // if password does not exists
   if (!password) {
     return res.status(400).json({ message: "Password required" });
   }
@@ -96,7 +98,7 @@ const userSignIn = async (req, res) => {
       console.log("User not found with email:", email);
       return res.status(400).json({ message: "Invalid email or password" });
     }
-
+    // if password is not matched with the hashedPassword stored in the DB
     const validatePassword = await bcrypt.compare(
       password,
       userToFind.password
@@ -116,6 +118,5 @@ const userSignIn = async (req, res) => {
       .json({ message: "Internal server error", error: error.message });
   }
 };
-
 
 module.exports = { userSignUp, userSignIn };
