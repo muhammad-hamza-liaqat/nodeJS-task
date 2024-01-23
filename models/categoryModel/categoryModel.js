@@ -17,22 +17,10 @@ const categoryValidationSchema = Joi.object({
     .min(3)
     .required()
     .regex(/^[a-zA-Z]+$/, { name: "letters" })
-    .error((errors) => {
-      // Custom error messages
-      return errors.map((error) => {
-        switch (error.code) {
-          case "string.min":
-            return {
-              message: "Category type should have at least 3 characters",
-            };
-          case "any.required":
-            return { message: "Category type is required" };
-          case "string.pattern.base":
-            return { message: "Category type should only contain letters" };
-          default:
-            return { message: "Invalid category type" };
-        }
-      });
+    .messages({
+      "string.min": "Category type should have at least 3 characters",
+      "any.required": "Category type is required",
+      "string.pattern.base": "Category type should only contain letters",
     }),
 });
 

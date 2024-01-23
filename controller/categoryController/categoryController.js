@@ -16,13 +16,11 @@ const addingCategory = async (req, res) => {
   try {
     const newCategory = await categoryModel.create(data);
     console.log("new category added:", newCategory);
-    return res
-      .status(201)
-      .json({
-        statusCode: 201,
-        message: "category added successfully!",
-        data: newCategory,
-      });
+    return res.status(201).json({
+      statusCode: 201,
+      message: "category added successfully!",
+      data: newCategory,
+    });
   } catch (error) {
     console.log("internal server error- adding category conytroller", error);
     return res
@@ -31,30 +29,62 @@ const addingCategory = async (req, res) => {
   }
 };
 
-
-const editCategory = async (req,res)=>{
+const editCategory = async (req, res) => {
   const id = req.params.id;
-  const {newCategoryName} = req.body;
-  if (!id){
-    return res.status(400).json({statusCode:400,message: "ID is missing from the params"})
+  const { newCategoryType } = req.body;
+  if (!id) {
+    return res
+      .status(400)
+      .json({ statusCode: 400, message: "ID is missing from the params" });
   }
   try {
-    const categoryToFind = await categoryModel.findByIdAndUpdate(id);
-    if (!categoryToFind){
-      return res.status(404).json({statusCode:404,message: "category not found!"})
+    const categoryToFind = await categoryModel.findByIdAndUpdate(
+      id,
+      { categoryType: newCategoryType },
+      // it will return the newly updated value.
+      { new: true }
+    );
+
+    console.log("Category To Find:", categoryToFind);
+    if (!categoryToFind) {
+      return res
+        .status(404)
+        .json({ statusCode: 404, message: "category not found!" });
     }
-    // updating the category
-    categoryToFind.categoryType = req.body.newCategoryName;
-    await categoryToFind.save();
-    return res.status(200).json({statusCode:200, message:"category updated successfully!", data: categoryToFind})
+    return res.status(200).json({
+      statusCode: 200,
+      message: "category updated successfully!",
+      data: categoryToFind,
+    });
   } catch (error) {
     console.log("internal server error", error);
-    return res.status(500).json({message: "internal server error", error:error})
+    return res
+      .status(500)
+      .json({ message: "internal server error", error: error });
   }
-}
+};
+
+const getAll = async (req, res) => {
+  try {
+    const categoryData = await categoryModel.find();
+    console.log("data:", categoryData);
+    return res
+      .status(200)
+      .json({ statusCode: 200, message: "data fetched", data: categoryData });
+  } catch (error) {
+    console.log("internal server error", error);
+    return res
+      .status(500)
+      .json({
+        statusCode: 500,
+        message: "internal server error",
+        error: error,
+      });
+  }
+};
 
 module.exports = {
   addingCategory,
   editCategory,
-
+  getAll
 };
