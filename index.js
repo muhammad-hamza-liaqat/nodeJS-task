@@ -14,11 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // import routes
-const userRoute = require("./routes/userRoute");
+const userRoute = require("./routes/userRoutes");
 const carRoute = require("./routes/carRoutes");
+const categoryRoute = require("./routes/categoryRoutes");
 // using routes
 app.use("/api/user", userRoute);
 app.use("/api/car", carRoute);
+app.use("/api/category", categoryRoute);
 // creating server
 app.listen(process.env.PORT, () => {
   console.log(`server running at http://localhost${process.env.PORT}`);
