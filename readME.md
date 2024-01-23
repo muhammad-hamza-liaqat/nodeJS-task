@@ -24,6 +24,7 @@
 
 ### Endpoint: http://localhost:3000/api/car/add-car
 #### Description: Add a new car
+the car will create only when the category exists
 
 
 ### Endpoint: http://localhost:3000/api/car/edit-car/:id

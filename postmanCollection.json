@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "a9dab32f-3bab-4fa6-9485-f3bb399e9c48",
+		"name": "nodeJS Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30134387",
+		"_collection_link": "https://grey-escape-224058.postman.co/workspace/New-Team-Workspace~e3476a32-405a-4e71-86bc-352ba5d33b90/collection/30134387-a9dab32f-3bab-4fa6-9485-f3bb399e9c48?action=share&source=collection_link&creator=30134387"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "muhammadhamzaliaqat9@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "44378070-f379-485d-a0a9-2ec4fe71d791",
+							"type": "text"
+						},
+						{
+							"key": "phoneNumber",
+							"value": "03144099558",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sign-Up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"muhammad hamza\",\n    \"email\": \"muhammadhamzaliaqat9@gmail.com\",\n    \"phoneNumber\": \"03144099558\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/sign-up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"categoryType\": \"car\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/category/add-category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"category",
+						"add-category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit-category",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"newCategoryType\": \"bus edit\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/category/edit-category/65afd0f1d17271e5a94f6637",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"category",
+						"edit-category",
+						"65afd0f1d17271e5a94f6637"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all category data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/category/get-category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"category",
+						"get-category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete category data",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/category/delete-category/65afe760171c8ac8a9a2821a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"category",
+						"delete-category",
+						"65afe760171c8ac8a9a2821a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-car",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"color\": \"black\",\n    \"model\": \"corolla 2015\",\n    \"make\": \"corolla\",\n    \"registrationNo\": \"LEA1526\",\n    \"categoryType\": \"car\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/car/add-car",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"car",
+						"add-car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit-car",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"color\": \"black\",\n    \"make\" : \"toyota\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/car/edit-car/65aff160466243cae9711df6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"car",
+						"edit-car",
+						"65aff160466243cae9711df6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-car",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/car/delete-car/65aff1e23fd4c8cb5fe97425",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"car",
+						"delete-car",
+						"65aff1e23fd4c8cb5fe97425"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-car",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/car/get-car",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"car",
+						"get-car"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
