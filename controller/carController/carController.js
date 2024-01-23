@@ -46,10 +46,29 @@ const editCar = async (req, res) => {
   return res.status(200).json({statusCode:200, message: "data updated", data: carData})
 };
 const deleteCar = async (req, res) => {
-  res.send("hello");
+  // res.send("hello");
+  const id = req.params.id ;
+  try {
+    const carToFind = await carModel.findByIdAndDelete(id);
+    if (!carToFind){
+      return res.status(404).json({statusCode:404, message: "car not found"})
+    }
+    console.log("deleted", id);
+    return res.status(200).json({statusCode:200, message:"car deleted"})
+    
+  } catch (error) {
+    console.log("error",error);
+    return res.status(500).json({statusCode:500, message:"internal server error", error: error})
+  }
 };
 const allCar = async (req, res) => {
-  res.send("hello");
+  try {
+    const carData = await carModel.find();
+    return res.status(200).json({statusCode:200, message: "data fetched", data: carData})
+  } catch (error) {
+    console.log("internal server error",error);
+    return res.status(500).json({statusCode:500, message:"internal server error"})
+  }
 };
 
 module.exports = { addingCar, editCar, deleteCar, allCar };
