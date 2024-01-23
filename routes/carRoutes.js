@@ -1,6 +1,6 @@
 const express = require("express");
 const carRoutes = express.Router();
-
-carRoutes.route("/add-car").post(addingCar);
+const {addingCar} = require("../controller/carController/carController")
+carRoutes.route("/add-car").get(addingCar);
 
 module.exports = carRoutes;
