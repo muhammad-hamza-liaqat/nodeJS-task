@@ -2,7 +2,7 @@ const { userModel, validateUser } = require("../../models/userModel/userModel");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const { newEmailQueue } = require("../../utils/nodeMailer/nodeMailer");
-
+const jwt = require("jsonwebtoken")
 const userSignUp = async (req, res) => {
   const userData = req.body;
   // console.log(userData)
@@ -108,9 +108,20 @@ const userSignIn = async (req, res) => {
       console.log("Invalid password for user:", email);
       return res.status(400).json({ message: "Invalid email or password" });
     }
+    // jwt implement
+    const jwtToken = jwt.sign(
+      {
+        userID: userToFind.userID,
+        firstName: userToFind.name,
+        lastName: userToFind.phoneNumber,
+        email: userToFind.email,
+      },
+      process.env.Secret_KEY,
+      { expiresIn: process.env.expiry_time }
+    );
 
     console.log("User login successful for email:", email);
-    return res.status(200).json({ message: "User login", user: userToFind });
+    return res.status(200).json({ message: "User login", user: userToFind, token: jwtToken });
   } catch (error) {
     console.log("Internal server error - userSignIn", error);
     return res
