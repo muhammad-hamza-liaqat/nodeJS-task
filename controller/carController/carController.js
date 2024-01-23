@@ -25,7 +25,25 @@ const addingCar = async (req, res) => {
 };
 
 const editCar = async (req, res) => {
-  res.send("hello");
+  // res.send("hello");
+  const {color, make, model, registrationNo} = req.body;
+  const id = req.params.id;
+  // checking the car exits or not
+  const carData = await carModel.findById(id);
+
+  if (!carData){
+    return res.status(404).json({statusCode:404, message: "car not found"})
+  }
+  // update the existing data
+  // if user adds user information it will save new information else it will save the previous data
+
+  carData.make = make || carData.make;
+  carData.model = model || carData.model ;
+  carData.color = color || carData.color;
+  carData.registrationNo = registrationNo || carData.registrationNo 
+
+  await carData.save();
+  return res.status(200).json({statusCode:200, message: "data updated", data: carData})
 };
 const deleteCar = async (req, res) => {
   res.send("hello");
