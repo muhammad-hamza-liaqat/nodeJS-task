@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const userModel = mongoose.model("User", userSchema);
+const userModel = mongoose.model("users", userSchema);
 
 const userJoiSchema = Joi.object({
   name: Joi.string()

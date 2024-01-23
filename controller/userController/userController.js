@@ -81,7 +81,7 @@ const userSignUp = async (req, res) => {
 
 const userSignIn = async (req, res) => {
   const { email, password } = req.body;
-  console.log("Received request with email:", email);
+  console.log("Received request of login against this email:", email);
   // if email does not exists
   if (!email) {
     return res.status(400).json({ message: "Email required" });
