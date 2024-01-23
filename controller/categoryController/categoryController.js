@@ -83,8 +83,22 @@ const getAll = async (req, res) => {
   }
 };
 
+const deleteCategory = async (req,res)=>{
+  const id = req.params.id;
+  if (!id){
+    return res.status(400).json({statusCode:400, message:"id not found in params"})
+  }
+  try {
+    const dataToDelete = await categoryModel.findByIdAndDelete(id);
+    return res.status(200).json({statusCode:200, message: "data deleted successfully!", dataDeleted: dataToDelete})
+  } catch (error) {
+    console.log("internal server error - delete category", error);
+    return res.status(500).json({statusCode:500, message:"internal server error", error: error})
+  }
+}
 module.exports = {
   addingCategory,
   editCategory,
-  getAll
+  getAll, 
+  deleteCategory
 };
